@@ -98,12 +98,15 @@ tabsParent.addEventListener('click', function(event) {
          modal = document.querySelector('.modal'),
          modalCloseBtn = document.querySelector('[data-close]');
    
+   function openModal() {
+      modal.classList.add('show');
+      modal.classList.remove('hide');
+      document.body.style.overflow = 'hidden';
+      clearInterval(modalTimerId);
+   }
+
    modalTriger.forEach(item => {
-      item.addEventListener('click', () => {
-         modal.classList.add('show');
-         modal.classList.remove('hide');
-         document.body.style.overflow = 'hidden';
-      });
+      item.addEventListener('click', openModal);
    });
 
    function closeModal() {
@@ -125,4 +128,15 @@ tabsParent.addEventListener('click', function(event) {
          closeModal();
       }
    });
+
+   const modalTimerId = setTimeout(openModal, 10000);
+
+   function showModalByScroll() {
+      if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+         openModal();
+         window.removeEventListener('scroll', showModalByScroll);
+      }
+   }
+
+   window.addEventListener('scroll', showModalByScroll);
 });
