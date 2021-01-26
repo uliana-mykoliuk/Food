@@ -142,12 +142,13 @@ tabsParent.addEventListener('click', function(event) {
    
    //Use classes for cards
    class Cards {
-      constructor(src, alt, menuSubtitle, description, price, parentSelector){
+      constructor(src, alt, menuSubtitle, description, price, parentSelector, ...classes){
          this.src = src;
          this.alt = alt;
          this.menuSubtitle = `Меню "${menuSubtitle}"`;
          this.description = description;
          this.price = price;
+         this.classes = classes;
          this.parent = document.querySelector(parentSelector);
          this.transfer = 27;
          this.changeToUAH();
@@ -159,7 +160,15 @@ tabsParent.addEventListener('click', function(event) {
 
       render() {
          const element = document.createElement('div');
-         element.innerHTML = `<div class="menu__item">
+
+         if (this.classes.length == 0) {
+            this.element = 'menu__item';
+            element.classList.add(this.element);
+         } else{
+            this.classes.forEach(className => element.classList.add(className));
+         }
+      
+         element.innerHTML = `
          <img src= ${this.src} alt= ${this.alt}>
          <h3 class="menu__item-subtitle">${this.menuSubtitle}</h3>
          <div class="menu__item-descr">${this.description}</div>
@@ -168,7 +177,7 @@ tabsParent.addEventListener('click', function(event) {
             <div class="menu__item-cost">Цена:</div>
             <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
          </div>
-         </div>`;
+         `;
 
          this.parent.append(element);
       }
@@ -181,25 +190,28 @@ tabsParent.addEventListener('click', function(event) {
       `Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. 
       Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!`, 
       8, 
-      ".menu .container"
+      ".menu .container",
       ).render();
 
    new Cards(
       "img/tabs/elite.jpg",
       "elite",
       'Премиум',
-      `В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!`,
+      `В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. 
+      Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!`,
       20,
-      '.menu .container'
+      '.menu .container',
    ).render();
 
    new Cards(
       "img/tabs/post.jpg",
       "post",
       "Постное",
-      `Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.`,
+      `Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко 
+      из миндаля, овса, кокоса или гречки, правильное количество белков 
+      за счет тофу и импортных вегетарианских стейков.`,
       17,
-      '.menu .container'
+      '.menu .container',
    ).render();
 
 });
