@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function () {
       modal('[data-modal]', '.modal', modalTimerId);
       forms('form', modalTimerId);
       cards();
-      timer('.timer', '2021-05-20');
+      timer('.timer', '2023-06-20');
       calc();
       slider({
             container: '.offer__slider', 
